@@ -14,7 +14,9 @@ selectCategories()
 };
 
 // exports.getReviewId = (req,res) => {
-//     // const id = 
-//     // console.log(req.params)
+//     // const { review_id } = req.params;
 //     fetchReviewById()
+//     .then((review) => {
+    // res.status(200).send({ review })
+// })
 // }

@@ -9,5 +9,9 @@ exports.selectCategories = () => {
 };
 
 // exports.fetchReviewById = (id) => {
-
+// return db.query(`SELECT * FROM reviews WHERE review_id = &1;`, [id])
+// .then((result) => {
+//     console.log(result.rows)
+//     return result.rows[0]
+// })
 // }
