@@ -38,6 +38,7 @@ afterAll(() => {
 //         .then(({body}) => {
 //             const {reviews} = body;
 //             console.log(reviews)
+//             expect(true).toBe(true)
 //         })
 //     });
 //   });

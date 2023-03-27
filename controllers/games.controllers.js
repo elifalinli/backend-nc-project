@@ -13,10 +13,13 @@ selectCategories()
     });
 };
 
-// exports.getReviewId = (req,res) => {
-//     // const { review_id } = req.params;
-//     fetchReviewById()
-//     .then((review) => {
-    // res.status(200).send({ review })
-// })
-// }
+exports.getReviewId = (req,res) => {
+    const { review_id } = req.params;
+    fetchReviewById(review_id)
+    .then((review) => {
+    res.status(200).send({ review })
+})
+.catch((err) =>{
+     next(err)
+})
+}
