@@ -30,15 +30,15 @@ afterAll(() => {
         });
     });
   });
-//   describe('/api/reviews/:review_id', () => {
-//     it('200: ', () => {
-//         return request(app)
-//         .get('/api/reviews/:review_id')
-//         .expect(200)
-//         .then(({body}) => {
-//             const {reviews} = body;
-//             console.log(reviews)
-//             expect(true).toBe(true)
-//         })
-//     });
-//   });
+  xdescribe('/api/reviews/:review_id', () => {
+    it('200: should respond with the review of requested id. ', () => {
+        return request(app)
+        .get('/api/reviews/:review_id')
+        .expect(200)
+        .then(({body}) => {
+            const {reviews} = body;
+            console.log(reviews)
+            
+        })
+    });
+  });

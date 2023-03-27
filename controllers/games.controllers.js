@@ -1,6 +1,6 @@
 const { path } = require("../app");
-const categories = require("../db/data/test-data/categories")
-const { selectCategories } = require("../models/games.models")
+// const categories = require("../db/data/test-data/categories")
+const { selectCategories, fetchReviewById } = require("../models/games.models")
 
 
 exports.getCategories = (req, res) => {
@@ -13,7 +13,7 @@ selectCategories()
     });
 };
 
-exports.getReviewId = (req,res) => {
+exports.getReviewById = (req,res) => {
     const { review_id } = req.params;
     fetchReviewById(review_id)
     .then((review) => {
