@@ -1,3 +1,4 @@
+const { path } = require("../app");
 const categories = require("../db/data/test-data/categories")
 const { selectCategories } = require("../models/games.models")
 
@@ -8,5 +9,6 @@ selectCategories()
     res.status(200).send({categories})})
     .catch((err) => {
         console.log(err)
+        res.status(400).send({msg: 'Invalid path!'})
     });
 };
