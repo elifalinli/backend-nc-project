@@ -6,5 +6,8 @@ exports.selectCategories = () => {
     .then(({rows}) => {
         return rows
     })
+};
 
-}
+// exports.fetchReviewById = (id) => {
+
+// }

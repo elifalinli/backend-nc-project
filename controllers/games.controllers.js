@@ -12,3 +12,9 @@ selectCategories()
         res.status(400).send({msg: 'Invalid path!'})
     });
 };
+
+// exports.getReviewId = (req,res) => {
+//     // const id = 
+//     // console.log(req.params)
+//     fetchReviewById()
+// }

@@ -28,6 +28,16 @@ afterAll(() => {
                     });
                 });
         });
-
     });
   });
+//   describe('/api/reviews/:review_id', () => {
+//     it('200: ', () => {
+//         return request(app)
+//         .get('/api/reviews/:review_id')
+//         .expect(200)
+//         .then(({body}) => {
+//             const {reviews} = body;
+//             console.log(reviews)
+//         })
+//     });
+//   });

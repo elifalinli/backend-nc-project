@@ -1,8 +1,10 @@
 const express = require('express');
-const { getCategories } = require('../be-nc-games/controllers/games.controllers');
+const { getCategories, getReviewId } = require('../be-nc-games/controllers/games.controllers');
 const app = express();
 
 app.get('/api/categories', getCategories)
+
+// app.get('/api/reviews/:review_id', getReviewId)
 
 app.use((err, req, res, next) => {
     if(err.status === 500){
