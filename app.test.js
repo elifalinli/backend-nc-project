@@ -46,7 +46,7 @@ afterAll(() => {
         .then(({_body}) => {
             const {review} = _body
             expect(review).toMatchObject({
-              review_id: expect.any(Number),
+              review_id: 3,
               title: expect.any(String),
               category: expect.any(String),
               designer: expect.any(String),
