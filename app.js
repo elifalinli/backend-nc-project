@@ -29,16 +29,6 @@ app.use((err, req, res, next) => {
 
 app.use((err, req, res, next) => {
   res.status(500).send({ msg: "Ooopss! Server error!" });
-
-app.all("*", (req, res, next) => {
-  res.status(404).send({ msg: "Page not found!" });
-});
-
-app.use((err, req, res, next) => {
-  if (err.status === 500) {
-    console.log(err);
-    res.status(500).send({ msg: "Ooopss! Server error!" });
-  }
-});
+})
 
 module.exports = app;
