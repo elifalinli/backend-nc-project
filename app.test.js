@@ -41,8 +41,8 @@ beforeEach(() => {
         return request(app)
         .get('/api/reviews/3')
         .expect(200)
-        .then(({_body}) => {
-            const {review} = _body
+        .then(({body}) => {
+            const {review} = body
             expect(review).toMatchObject({
               review_id: 3,
               title: expect.any(String),
@@ -61,16 +61,16 @@ beforeEach(() => {
       return request(app)
       .get('/api/reviews/9999')
       .expect(404)
-      .then(({_body}) => {
-        expect(_body.msg).toBe('review not found!')
+      .then(({body}) => {
+        expect(body.msg).toBe('review not found!')
       })
     })
     it('400: should respond with an error message indicating requested id is invalid. ', () => {
       return request(app)
       .get('/api/reviews/not-a-num')
       .expect(400)
-      .then(({_body}) => {
-        expect(_body.msg).toBe('Bad Request')
+      .then(({body}) => {
+        expect(body.msg).toBe('Bad Request')
     });
   });
   });
