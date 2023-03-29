@@ -35,3 +35,17 @@ exports.selectReviews = () => {
     return rows;
   });
 };
+
+exports.fetchCommentsByReviewId = (id) => {
+  const psqlQuery = `SELECT * FROM comments WHERE review_id = $1 ORDER BY comments.created_at DESC`;
+  return db.query(psqlQuery, [id]).then(({ rows }) => {
+    const comments = rows;
+    if (comments.length === 0) {
+      return Promise.reject({
+        status: 404,
+        msg: `comments not found!`,
+      });
+    }
+    return comments;
+  });
+};
