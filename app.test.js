@@ -3,6 +3,7 @@ const app = require("./app");
 const db = require("./db/connection");
 const seed = require("./db/seeds/seed");
 const testData = require("./db/data/test-data/index");
+const sorted = require('jest-sorted');
 
 afterAll(() => {
   return db.end();
@@ -74,4 +75,32 @@ beforeEach(() => {
     });
   });
   });
+  describe('/api/reviews', () => {
+    it('GET 200: should respond with a reviews array of review objects ', () => {
+      return request(app)
+      .get('/api/reviews')
+      .expect(200)
+      .then(({body}) => {
+        const {reviews} = body
+        expect(reviews).toBeInstanceOf(Array);
+        expect(reviews).toHaveLength(13);
+          reviews.forEach((review) => {
+            expect(review).toMatchObject({
+              owner: expect.any(String),
+              title: expect.any(String),
+              review_id: expect.any(Number),
+              category: expect.any(String),
+              designer: expect.any(String),
+              review_img_url: expect.any(String),
+              created_at: expect.any(String),
+              votes: expect.any(Number),
+              comment_count: expect.any(Number)
+            });
+          });
+          expect(reviews).toBeSorted({ descending: true });
+      })
+
+    });
+  });
+
 
