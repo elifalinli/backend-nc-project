@@ -3,6 +3,7 @@ const app = require("./app");
 const db = require("./db/connection");
 const seed = require("./db/seeds/seed");
 const testData = require("./db/data/test-data/index");
+const sorted = require('jest-sorted');
 
 afterAll(() => {
   return db.end();
@@ -82,7 +83,7 @@ beforeEach(() => {
       .then(({body}) => {
         const {reviews} = body
         expect(reviews).toBeInstanceOf(Array);
-          expect(reviews).toHaveLength(13);
+        expect(reviews).toHaveLength(13);
           reviews.forEach((review) => {
             expect(review).toMatchObject({
               owner: expect.any(String),
@@ -94,9 +95,9 @@ beforeEach(() => {
               created_at: expect.any(String),
               votes: expect.any(Number),
               comment_count: expect.any(Number)
-
             });
           });
+          expect(reviews).toBeSorted({ descending: true });
       })
 
     });
