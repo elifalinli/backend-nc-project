@@ -38,23 +38,15 @@ exports.selectReviews = () => {
 
 exports.fetchCommentsByReviewId = (id) => {
   const psqlQueryReview = `SELECT * FROM reviews WHERE review_id = $1`;
-  return db
-    .query(psqlQueryReview, [id])
-    .then((reviewResult) => {
-      const reviewRowCount = reviewResult.rowCount;
-      return reviewRowCount;
-    })
-    .then((reviewRowCount) => {
-      const psqlQuery = `SELECT * FROM comments WHERE review_id = $1 ORDER BY comments.created_at DESC`;
-      return db.query(psqlQuery, [id])
-      .then((result) => {
-        if (reviewRowCount === 0) {
-          return Promise.reject({
-            status: 404,
-            msg: `comments not found!`,
-          });
-        }
-        return result.rows;
-      });
-    });
+  const psqlQueryComments = `SELECT * FROM comments WHERE review_id = $1 ORDER BY created_at DESC`;
+
+  return Promise.all([
+    db.query(psqlQueryReview, [id]),
+    db.query(psqlQueryComments, [id]),
+  ]).then(([reviewResult, commentsResult]) => {
+    if (reviewResult.rowCount === 0) {
+      return Promise.reject({ status: 404, msg: `comments not found!` });
+    }
+    return commentsResult.rows;
+  });
 };
