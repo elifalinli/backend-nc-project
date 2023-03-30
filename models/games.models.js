@@ -50,3 +50,14 @@ exports.fetchCommentsByReviewId = (id) => {
     return commentsResult.rows;
   });
 };
+
+exports.insertComment = (comment) => {
+  const {username, body} = comment
+  const psqlQuery = `INSERT INTO comments (username, body) VALUES ($1, $2) RETURNING *;`
+  return db
+  .query(psqlQuery, [comment] )
+  .then((commentData) => {
+    console.log(commentData.rows)
+    return commentData.rows;
+  })
+}
