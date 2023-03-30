@@ -147,3 +147,15 @@ describe("/api/reviews/:review_id/comments", () => {
       });
   });
 });
+xdescribe(' /api/reviews/:review_id/comments', () => {
+  it('should request body accepts an object with two properties: username and body. And should respond with posted comment.', () => {
+    const newComment = {username: "elif", body: "cool game!"}
+    return request(app)
+    .post('/api/reviews/5/comments')
+    .send(newComment)
+    .expect(201)
+    // .then((res) => {
+    //   console.log(res)
+    // })
+  });
+});
