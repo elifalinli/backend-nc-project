@@ -121,7 +121,16 @@ describe("/api/reviews/:review_id/comments", () => {
         expect(comments).toBeSorted({ descending: true });
       });
   });
-  it("400: should respond with an error message indicating requested id is invalid. ", () => {
+  it('GET 200: should respond with an empty array if given review_id exist but no comment found with it. ', () => {
+    return request(app)
+    .get("/api/reviews/5/comments")
+    .expect(200)
+    .then(({body}) => {
+      const {comments} = body;
+      expect(comments).toEqual([])
+    })
+  });
+  it("GET 400: should respond with an error message indicating requested id is invalid. ", () => {
     return request(app)
       .get("/api/reviews/not-a-num/comments")
       .expect(400)
@@ -129,9 +138,9 @@ describe("/api/reviews/:review_id/comments", () => {
         expect(body.msg).toBe("Bad Request");
       });
   });
-  it("404: should respond with correct msg for valid but non-existent review_id.", () => {
+  it("GET 404: should respond with correct msg for valid but non-existent review_id.", () => {
     return request(app)
-      .get("/api/reviews/5/comments")
+      .get("/api/reviews/999/comments")
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("comments not found!");
