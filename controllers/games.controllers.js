@@ -1,10 +1,10 @@
-const { path } = require("../app");
 const {
   selectCategories,
   fetchReviewById,
   selectReviews,
   fetchCommentsByReviewId,
-} = require("../models/games.models");
+  insertComment
+} = require("../models/games.models.js");
 
 exports.getCategories = (req, res, next) => {
   selectCategories()
@@ -47,3 +47,14 @@ exports.getCommentsByReviewId = (req, res, next) => {
       next(err);
     });
 };
+
+exports.postComment = (req,res,next) => {
+  const newComment = req.body;
+  console.log(req.body)
+  insertComment(newComment).then((comment) => {
+    res.status(201).send({comment})
+  })
+  .catch((err) => {
+    next(err);
+  });
+}

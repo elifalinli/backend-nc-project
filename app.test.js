@@ -108,6 +108,7 @@ describe("/api/reviews/:review_id/comments", () => {
       .then(({ body }) => {
         const { comments } = body;
         expect(comments).toBeInstanceOf(Array);
+        expect(comments).toHaveLength(3)
         comments.forEach((comment) => {
           expect(comment).toMatchObject({
             comment_id: expect.any(Number),
@@ -145,5 +146,17 @@ describe("/api/reviews/:review_id/comments", () => {
       .then(({ body }) => {
         expect(body.msg).toBe("comments not found!");
       });
+  });
+});
+xdescribe(' /api/reviews/:review_id/comments', () => {
+  it('should request body accepts an object with two properties: username and body. And should respond with posted comment.', () => {
+    const newComment = {username: "elif", body: "cool game!"}
+    return request(app)
+    .post('/api/reviews/5/comments')
+    .send(newComment)
+    .expect(201)
+    // .then((res) => {
+    //   console.log(res)
+    // })
   });
 });
