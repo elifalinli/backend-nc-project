@@ -9,7 +9,9 @@ exports.handlePSQL400s = (err, req, res, next) => {
   exports.handleCustomErrors = (err, req, res, next) => {
     if (err.status && err.msg) {
       res.status(err.status).send({ msg: err.msg });
-    } else next(err);
+    } else {
+       next(err);
+    }
   };
   
   exports.handle500statuses = (err, req, res, next) => {
