@@ -1,3 +1,4 @@
+
 exports.handlePSQL400s = (err, req, res, next) => {
     if (err.code === "22P02") {
       res.status(400).send({ msg: "Bad Request" });
@@ -5,7 +6,13 @@ exports.handlePSQL400s = (err, req, res, next) => {
       next(err);
     }
   };
-  
+exports.handleForeignKeyErrors = (err, req, res, next) => {
+  if (err.code === '23503') {
+    res.status(400).send({ msg: "The key is not present!" });
+  } else {
+    next(err);
+  }
+};
   exports.handleCustomErrors = (err, req, res, next) => {
     if (err.status && err.msg) {
       res.status(err.status).send({ msg: err.msg });
@@ -13,8 +20,10 @@ exports.handlePSQL400s = (err, req, res, next) => {
        next(err);
     }
   };
-  
+ 
   exports.handle500statuses = (err, req, res, next) => {
     console.log(err)
     res.status(500).send({ msg: "Ooopss! Server error!" });
   };
+
+  

@@ -4,6 +4,7 @@ const {
   fetchReviewById,
   selectReviews,
   fetchCommentsByReviewId,
+  insertComment
 } = require("../models/games.models");
 
 exports.getCategories = (req, res, next) => {
@@ -47,3 +48,14 @@ exports.getCommentsByReviewId = (req, res, next) => {
       next(err);
     });
 };
+
+exports.postComment = (req,res,next) => {
+  const newComment = req.body;
+  const id = req.params.review_id
+  insertComment(newComment, id).then((comment) => {
+    res.status(201).send({comment: comment})
+  })
+  .catch((err) => {
+    next(err);
+  });
+}

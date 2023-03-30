@@ -51,13 +51,12 @@ exports.fetchCommentsByReviewId = (id) => {
   });
 };
 
-exports.insertComment = (newComment) => {
-  const {username, body} = newComment
-  const psqlQuery = `INSERT INTO comments (username, body) VALUES ($1, $2) RETURNING *;`
-  return db
-  .query(psqlQuery, [username, body] )
-  .then(({rows}) => {
-    console.log(rows[0])
+exports.insertComment = (newComment, id) => {
+  const psqlQueryInsert = `INSERT INTO comments (author, body, review_id) VALUES ($1, $2, $3) RETURNING *;`;
+
+  const { username, body } = newComment;
+
+  return db.query(psqlQueryInsert, [username, body, id]).then(({ rows }) => {
     return rows[0];
-  })
-}
+  });
+};
