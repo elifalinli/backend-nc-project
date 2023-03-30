@@ -9,6 +9,7 @@ const {
 const { handlePSQL400s, handleCustomErrors, handle500statuses } = require("./controllers/error-handling.controllers.js");
 const app = express();
 
+
 app.get("/api/categories", getCategories);
 
 app.get("/api/reviews/:review_id", getReviewById);
