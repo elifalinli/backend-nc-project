@@ -4,9 +4,9 @@ const {
   getReviewById,
   getReviews,
   getCommentsByReviewId,
-  postComment
-} = require("../be-nc-games/controllers/games.controllers");
-const { handlePSQL400s, handleCustomErrors, handle500statuses, handleForeignKeyErrors, handleNullKeyErrors } = require("./controllers/error-handling.controllers");
+  postComment,
+} = require("./controllers/games.controllers.js");
+const { handlePSQL400s, handleCustomErrors, handle500statuses } = require("./controllers/error-handling.controllers.js");
 const app = express();
 app.use(express.json())
 

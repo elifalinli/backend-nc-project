@@ -108,6 +108,7 @@ describe("/api/reviews/:review_id/comments", () => {
       .then(({ body }) => {
         const { comments } = body;
         expect(comments).toBeInstanceOf(Array);
+        expect(comments).toHaveLength(3)
         comments.forEach((comment) => {
           expect(comment).toMatchObject({
             comment_id: expect.any(Number),
@@ -147,6 +148,7 @@ describe("/api/reviews/:review_id/comments", () => {
       });
   });
 });
+
 describe(" /api/reviews/:review_id/comments", () => {
   it("POST 201: should request body accepts an object with two properties: username and body. And should respond with posted comment.", () => {
     const newComment = { username: "philippaclaire9", body: "cool game!" };
@@ -225,5 +227,6 @@ describe(" /api/reviews/:review_id/comments", () => {
       .then(({ body }) => {
         expect(body.msg).toBe("something is missing with your request!");
       });
+
   });
 });

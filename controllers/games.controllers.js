@@ -1,4 +1,3 @@
-const { path } = require("../app");
 const {
   selectCategories,
   fetchReviewById,
@@ -6,6 +5,7 @@ const {
   fetchCommentsByReviewId,
   insertComment
 } = require("../models/games.models");
+
 
 exports.getCategories = (req, res, next) => {
   selectCategories()
@@ -60,3 +60,4 @@ exports.postComment = (req,res,next) => {
     next(err);
   });
 }
+
