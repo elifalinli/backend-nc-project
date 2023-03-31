@@ -122,14 +122,14 @@ describe("/api/reviews/:review_id/comments", () => {
         expect(comments).toBeSorted({ descending: true });
       });
   });
-  it('GET 200: should respond with an empty array if given review_id exist but no comment found with it. ', () => {
+  it("GET 200: should respond with an empty array if given review_id exist but no comment found with it. ", () => {
     return request(app)
-    .get("/api/reviews/5/comments")
-    .expect(200)
-    .then(({body}) => {
-      const {comments} = body;
-      expect(comments).toEqual([])
-    })
+      .get("/api/reviews/5/comments")
+      .expect(200)
+      .then(({ body }) => {
+        const { comments } = body;
+        expect(comments).toEqual([]);
+      });
   });
   it("GET 400: should respond with an error message indicating requested id is invalid. ", () => {
     return request(app)
@@ -148,15 +148,85 @@ describe("/api/reviews/:review_id/comments", () => {
       });
   });
 });
-xdescribe(' /api/reviews/:review_id/comments', () => {
-  it('should request body accepts an object with two properties: username and body. And should respond with posted comment.', () => {
-    const newComment = {username: "elif", body: "cool game!"}
+
+describe(" /api/reviews/:review_id/comments", () => {
+  it("POST 201: should request body accepts an object with two properties: username and body. And should respond with posted comment.", () => {
+    const newComment = { username: "philippaclaire9", body: "cool game!" };
     return request(app)
-    .post('/api/reviews/5/comments')
-    .send(newComment)
-    .expect(201)
-    // .then((res) => {
-    //   console.log(res)
-    // })
+      .post("/api/reviews/5/comments")
+      .send(newComment)
+      .expect(201)
+      .then((res) => {
+        expect(res.body.comment).toMatchObject({
+          comment_id: expect.any(Number),
+          review_id: 5,
+          author: "philippaclaire9",
+          body: "cool game!",
+          votes: expect.any(Number),
+          created_at: expect.any(String),
+        });
+      });
+  });
+  it("GET 400: should respond with an error message indicating requested id is invalid. ", () => {
+    const newComment = { username: "philippaclaire9", body: "cool game!" };
+    return request(app)
+      .post("/api/reviews/not-a-num/comments")
+      .send(newComment)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request");
+      });
+  });
+  it("GET 404: should respond with an error message if the username is not valid. ", () => {
+    const newComment = { username: "elif", body: "cool game!" };
+    return request(app)
+      .post("/api/reviews/5/comments")
+      .send(newComment)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("username not found!");
+      });
+  });
+  it("GET 404: should respond with correct msg for valid but non-existent id.", () => {
+    const newComment = { username: "philippaclaire9", body: "cool game!" };
+    return request(app)
+      .post("/api/reviews/999/comments")
+      .send(newComment)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("ID does not exist!");
+      });
+  });
+  it("POST 201: should ignore unnecessary properties that sent with the comment. ", () => {
+    const newComment = {
+      username: "philippaclaire9",
+      body: "cool game!",
+      number: 7,
+    };
+    return request(app)
+      .post("/api/reviews/5/comments")
+      .send(newComment)
+      .expect(201)
+      .then((res) => {
+        expect(res.body.comment).toMatchObject({
+          comment_id: expect.any(Number),
+          review_id: 5,
+          author: "philippaclaire9",
+          body: "cool game!",
+          votes: expect.any(Number),
+          created_at: expect.any(String),
+        });
+      });
+  });
+  it("GET 400: should respond with an error message if there is a missing key in the request. ", () => {
+    const newComment = { username: "philippaclaire9" };
+    return request(app)
+      .post("/api/reviews/5/comments")
+      .send(newComment)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("something is missing with your request!");
+      });
+
   });
 });

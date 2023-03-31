@@ -50,3 +50,22 @@ exports.fetchCommentsByReviewId = (id) => {
     return commentsResult.rows;
   });
 };
+
+exports.insertComment = (newComment, id) => {
+  const psqlQueryReview = `SELECT * FROM reviews WHERE review_id = $1`;
+  const psqlQueryInsert = `INSERT INTO comments (author, body, review_id) VALUES ($1, $2, $3) RETURNING *;`;
+
+  const { username, body } = newComment;
+  return db.query(psqlQueryReview, [id]).then((reviewResult) => {
+    if (reviewResult.rows.length === 0) {
+      return Promise.reject({
+        status: 404,
+        msg: `ID does not exist!`,
+      });
+    }
+
+    return db.query(psqlQueryInsert, [username, body, id]).then(({ rows }) => {
+      return rows[0];
+    });
+  });
+};
