@@ -7,6 +7,7 @@ const {
   postComment,
   patchComment,
   deleteComment,
+  getUsers,
 } = require("./controllers/games.controllers.js");
 const { handlePSQL400s, handleCustomErrors, handle500statuses, handleForeignKeyErrors, handleNullKeyErrors } = require("./controllers/error-handling.controllers.js");
 const app = express(); 
@@ -26,6 +27,8 @@ app.post('/api/reviews/:review_id/comments', postComment)
 app.patch('/api/reviews/:review_id', patchComment)
 
 app.delete('/api/comments/:comment_id', deleteComment)
+
+app.get('/api/users', getUsers)
 
 app.all("*", (req, res, next) => {
   res.status(404).send({ msg: "Page not found!" });

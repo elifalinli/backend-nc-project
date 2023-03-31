@@ -28,7 +28,7 @@ describe("/api/categories", () => {
         });
       });
   });
-  it("404: , responds with an error message when passed a non-existent path", () => {
+  it("GET 404: responds with an error message when passed a non-existent path", () => {
     return request(app)
       .get("/api/categoris")
       .expect(404)
@@ -331,6 +331,25 @@ describe('/api/comments/:comment_id', () => {
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("ID does not exist!");
+      });
+  });
+});
+describe('/api/users', () => {
+  it('GET 200: should respond with array of user objects', () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then(({ body }) => {
+        const { users } = body;
+        expect(users).toBeInstanceOf(Array);
+        expect(users).toHaveLength(4);
+        users.forEach((user) => {
+          expect(user).toMatchObject({
+            username: expect.any(String),
+            name: expect.any(String),
+            avatar_url: expect.any(String)
+          });
+        });
       });
   });
 });
