@@ -64,8 +64,8 @@ exports.postComment = (req,res,next) => {
 exports.patchComment = (req,res,next) => {
   const updatedComment = req.body.inc_votes
   const id = req.params.review_id
-  updateComment(req.body, id).then((comment) => {
-    res.status(200).send({comment})
+  updateComment(req.body, id).then((review) => {
+    res.status(200).send({review})
   })
   .catch((err) => {
     next(err)

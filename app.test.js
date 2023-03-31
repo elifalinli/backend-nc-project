@@ -237,7 +237,7 @@ describe('/api/reviews/:review_id', () => {
     .send({ inc_votes: 3 })
     .expect(200)
     .then((res) => {
-      expect(res.body.comment).toMatchObject({
+      expect(res.body.review).toMatchObject({
         title: 'Ultimate Werewolf',
         designer: 'Akihisa Okui',
         owner: 'bainesface',
@@ -256,7 +256,7 @@ describe('/api/reviews/:review_id', () => {
     .send({ inc_votes: -3 })
     .expect(200)
     .then((res) => {
-      expect(res.body.comment).toMatchObject({
+      expect(res.body.review).toMatchObject({
         title: 'Ultimate Werewolf',
         designer: 'Akihisa Okui',
         owner: 'bainesface',
