@@ -6,7 +6,7 @@ const {
   getCommentsByReviewId,
   postComment
 } = require("../be-nc-games/controllers/games.controllers");
-const { handlePSQL400s, handleCustomErrors, handle500statuses, handleForeignKeyErrors } = require("./controllers/error-handling.controllers");
+const { handlePSQL400s, handleCustomErrors, handle500statuses, handleForeignKeyErrors, handleNullKeyErrors } = require("./controllers/error-handling.controllers");
 const app = express();
 app.use(express.json())
 
@@ -27,7 +27,9 @@ app.all("*", (req, res, next) => {
 app.use(handlePSQL400s);
 app.use(handleCustomErrors);
 app.use(handleForeignKeyErrors);
+app.use(handleNullKeyErrors);
 app.use(handle500statuses);
+
 
 
 module.exports = app;
