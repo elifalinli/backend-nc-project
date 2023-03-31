@@ -4,7 +4,8 @@ const {
   selectReviews,
   fetchCommentsByReviewId,
   insertComment,
-  updateComment
+  updateComment,
+  removeComment
 } = require("../models/games.models");
 
 
@@ -66,6 +67,16 @@ exports.patchComment = (req,res,next) => {
   const id = req.params.review_id
   updateComment(req.body, id).then((review) => {
     res.status(200).send({review})
+  })
+  .catch((err) => {
+    next(err)
+  })
+}
+
+exports.deleteComment = (req,res,next) => {
+const id = req.params.comment_id
+  removeComment(id).then((deletedComment) => {
+    res.status(204).send({deletedComment})
   })
   .catch((err) => {
     next(err)

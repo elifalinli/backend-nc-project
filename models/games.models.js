@@ -86,3 +86,19 @@ exports.updateComment = (updatedComment, id) => {
     });
   });
 };
+
+exports.removeComment = (id) => {
+  psqlQuery = `DELETE FROM comments WHERE comment_id = $1 RETURNING *;`
+  const psqlQueryCommentId = `SELECT * FROM comments WHERE comment_id = $1`;
+  return db.query(psqlQueryCommentId, [id]).then((commentResult) => {
+    if (commentResult.rows.length === 0) {
+      return Promise.reject({
+        status: 404,
+        msg: `ID does not exist!`,
+      });
+    }
+  return db.query(psqlQuery, [id]).then((res) => {
+    return res.rows
+  });
+});
+};
