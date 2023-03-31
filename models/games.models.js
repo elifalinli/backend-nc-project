@@ -82,7 +82,6 @@ exports.updateComment = (updatedComment, id) => {
       });
     }
     return db.query(psqlQuery, [inc_votes, id]).then(({ rows }) => {
-      console.log("rows", rows);
       return rows[0]
     });
   });
