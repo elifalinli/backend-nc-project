@@ -8,6 +8,7 @@ const {
 } = require("./controllers/games.controllers.js");
 const { handlePSQL400s, handleCustomErrors, handle500statuses } = require("./controllers/error-handling.controllers.js");
 const app = express();
+app.use(express.json())
 
 
 app.get("/api/categories", getCategories);
@@ -26,6 +27,10 @@ app.all("*", (req, res, next) => {
 
 app.use(handlePSQL400s);
 app.use(handleCustomErrors);
+app.use(handleForeignKeyErrors);
+app.use(handleNullKeyErrors);
 app.use(handle500statuses);
+
+
 
 module.exports = app;

@@ -4,7 +4,8 @@ const {
   selectReviews,
   fetchCommentsByReviewId,
   insertComment
-} = require("../models/games.models.js");
+} = require("../models/games.models");
+
 
 exports.getCategories = (req, res, next) => {
   selectCategories()
@@ -50,11 +51,13 @@ exports.getCommentsByReviewId = (req, res, next) => {
 
 exports.postComment = (req,res,next) => {
   const newComment = req.body;
-  console.log(req.body)
-  insertComment(newComment).then((comment) => {
-    res.status(201).send({comment})
+  const id = req.params.review_id
+  insertComment(newComment, id).then((comment) => {
+    res.status(201).send({comment: comment})
   })
   .catch((err) => {
+    console.log(err)
     next(err);
   });
 }
+
