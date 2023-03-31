@@ -306,3 +306,31 @@ describe('/api/reviews/:review_id', () => {
       });
   });
 });
+describe('/api/comments/:comment_id', () => {
+  it('DELETE 204: should delete the given comment by comment_id and respond with no content ', () => {
+    return request(app)
+    .delete('/api/comments/1')
+    .expect(204)
+    .then((res) => {
+      console.log("test", res.body)
+      expect(res.body).toMatchObject({
+      })
+    })
+  });
+  it("GET 400: should respond with an error message indicating requested id is invalid. ", () => {
+    return request(app)
+      .delete("/api/comments/not-a-num")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request");
+      });
+  });
+  it("GET 404: should respond with correct msg for valid but non-existent id.", () => {
+    return request(app)
+      .delete("/api/comments/999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("ID does not exist!");
+      });
+  });
+});
