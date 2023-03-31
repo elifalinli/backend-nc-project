@@ -175,14 +175,14 @@ describe(" /api/reviews/:review_id/comments", () => {
         expect(body.msg).toBe("Bad Request");
       });
   });
-  it("GET 400: should respond with an error message if the username is not valid. ", () => {
+  it("GET 404: should respond with an error message if the username is not valid. ", () => {
     const newComment = { username: "elif", body: "cool game!" };
     return request(app)
       .post("/api/reviews/5/comments")
       .send(newComment)
-      .expect(400)
+      .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe("something is wrong with your request!");
+        expect(body.msg).toBe("username not found!");
       });
   });
   it("GET 404: should respond with correct msg for valid but non-existent id.", () => {
