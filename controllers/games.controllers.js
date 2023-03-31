@@ -5,7 +5,8 @@ const {
   fetchCommentsByReviewId,
   insertComment,
   updateComment,
-  removeComment
+  removeComment,
+  selectUsers
 } = require("../models/games.models");
 
 
@@ -81,5 +82,16 @@ const id = req.params.comment_id
   .catch((err) => {
     next(err)
   })
+}
+
+exports.getUsers = (req,res,next) => {
+  selectUsers()
+    .then((users) => {
+      res.status(200).send({ users });
+    })
+    .catch((err) => {
+      console.log(err)
+      next(err);
+    });
 }
 
