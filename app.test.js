@@ -312,7 +312,6 @@ describe('/api/comments/:comment_id', () => {
     .delete('/api/comments/1')
     .expect(204)
     .then((res) => {
-      console.log("test", res.body)
       expect(res.body).toMatchObject({
       })
     })
