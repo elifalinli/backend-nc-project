@@ -69,3 +69,20 @@ exports.insertComment = (newComment, id) => {
     });
   });
 };
+
+exports.updateComment = (updatedComment, id) => {
+  const psqlQuery = `UPDATE reviews SET votes = votes + $1 WHERE review_id = $2 RETURNING *`;
+  const psqlQueryReview = `SELECT * FROM reviews WHERE review_id = $1`;
+  const { inc_votes } = updatedComment;
+  return db.query(psqlQueryReview, [id]).then((reviewResult) => {
+    if (reviewResult.rows.length === 0) {
+      return Promise.reject({
+        status: 404,
+        msg: `ID does not exist!`,
+      });
+    }
+    return db.query(psqlQuery, [inc_votes, id]).then(({ rows }) => {
+      return rows[0]
+    });
+  });
+};

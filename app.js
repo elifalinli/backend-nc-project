@@ -5,6 +5,7 @@ const {
   getReviews,
   getCommentsByReviewId,
   postComment,
+  patchComment,
 } = require("./controllers/games.controllers.js");
 const { handlePSQL400s, handleCustomErrors, handle500statuses, handleForeignKeyErrors, handleNullKeyErrors } = require("./controllers/error-handling.controllers.js");
 const app = express(); 
@@ -20,6 +21,8 @@ app.get("/api/reviews", getReviews);
 app.get("/api/reviews/:review_id/comments", getCommentsByReviewId )
 
 app.post('/api/reviews/:review_id/comments', postComment)
+
+app.patch('/api/reviews/:review_id', patchComment)
 
 app.all("*", (req, res, next) => {
   res.status(404).send({ msg: "Page not found!" });

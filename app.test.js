@@ -228,5 +228,81 @@ describe(" /api/reviews/:review_id/comments", () => {
         expect(body.msg).toBe("something is missing with your request!");
       });
 
+  }); 
+});
+describe('/api/reviews/:review_id', () => {
+  it('PATCH 200: should update the given ids comment votes as in the request.', () => {
+    return request(app)
+    .patch("/api/reviews/3")
+    .send({ inc_votes: 3 })
+    .expect(200)
+    .then((res) => {
+      expect(res.body.review).toMatchObject({
+        title: 'Ultimate Werewolf',
+        designer: 'Akihisa Okui',
+        owner: 'bainesface',
+        review_img_url:
+          'https://images.pexels.com/photos/5350049/pexels-photo-5350049.jpeg?w=700&h=700',
+        review_body: "We couldn't find the werewolf!",
+        category: 'social deduction',
+        created_at: expect.any(String),
+        votes: 8
+      });
+    });
+  });
+  it('PATCH 200: should update the given ids comment votes as in the request when the votes are minuses.', () => {
+    return request(app)
+    .patch("/api/reviews/3")
+    .send({ inc_votes: -3 })
+    .expect(200)
+    .then((res) => {
+      expect(res.body.review).toMatchObject({
+        title: 'Ultimate Werewolf',
+        designer: 'Akihisa Okui',
+        owner: 'bainesface',
+        review_img_url:
+          'https://images.pexels.com/photos/5350049/pexels-photo-5350049.jpeg?w=700&h=700',
+        review_body: "We couldn't find the werewolf!",
+        category: 'social deduction',
+        created_at: expect.any(String),
+        votes: 2
+      });
+    });
+  });
+  it("GET 404: should respond with correct msg for valid but non-existent id.", () => {
+    return request(app)
+      .patch("/api/reviews/999")
+      .send({ inc_votes: 3 })
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("ID does not exist!");
+      });
+  });
+  it("GET 400: should respond with an error message if the key is missing in the request. ", () => {
+    return request(app)
+      .patch("/api/reviews/5")
+      .send({})
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("something is missing with your request!");
+      });
+  }); 
+  it("GET 400: should respond with an error message indicating requested id is invalid. ", () => {
+    return request(app)
+      .patch("/api/reviews/not-a-num")
+      .send({ inc_votes: 3 })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request");
+      });
+  });
+  it("GET 400: should respond with an error message when the value is not a number ", () => {
+    return request(app)
+      .patch("/api/reviews/3")
+      .send({ inc_votes: "!" })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request");
+      });
   });
 });

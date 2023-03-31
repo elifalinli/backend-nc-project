@@ -3,7 +3,8 @@ const {
   fetchReviewById,
   selectReviews,
   fetchCommentsByReviewId,
-  insertComment
+  insertComment,
+  updateComment
 } = require("../models/games.models");
 
 
@@ -56,8 +57,18 @@ exports.postComment = (req,res,next) => {
     res.status(201).send({comment: comment})
   })
   .catch((err) => {
-    console.log(err)
     next(err);
   });
+}
+
+exports.patchComment = (req,res,next) => {
+  const updatedComment = req.body.inc_votes
+  const id = req.params.review_id
+  updateComment(req.body, id).then((review) => {
+    res.status(200).send({review})
+  })
+  .catch((err) => {
+    next(err)
+  })
 }
 
