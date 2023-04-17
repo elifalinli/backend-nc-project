@@ -108,3 +108,16 @@ exports.selectUsers = () => {
     return rows;
   });
 }
+
+exports.selectReviewsByQueries = (category) => {
+  let selectReviewQueryString = `SELECT * FROM reviews`
+  const queryParameters = []
+
+  if(category){
+selectReviewQueryString += ` WHERE category = $1`
+queryParameters.push(category)
+  }
+  return db.query(selectReviewQueryString, queryParameters).then((result) => {
+    return result.rows
+  })
+}

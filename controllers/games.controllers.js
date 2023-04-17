@@ -6,7 +6,8 @@ const {
   insertComment,
   updateComment,
   removeComment,
-  selectUsers
+  selectUsers,
+  selectReviewsByQueries
 } = require("../models/games.models");
 
 
@@ -93,5 +94,14 @@ exports.getUsers = (req,res,next) => {
       console.log(err)
       next(err);
     });
+}
+exports.getReviewsByQueries = (req,res,next) => {
+  const {category} = req.query
+  selectReviewsByQueries(category).then((reviews) => {
+    res.status(200).send({reviews})
+  })
+  .catch((err) => {
+    next(err)
+  })
 }
 

@@ -352,3 +352,14 @@ describe('/api/users', () => {
       });
   });
 });
+// describe(' /api/reviews', () => {
+//   it('GET 200: should accept the endpoint which requires the reviews of queried categories. ', () => {
+//     return request(app)
+//     .get('/api/reviews/?category=euro-game')
+//     .expect(200)
+//     .then(({body}) => {
+//       const {reviews} = body;
+//       expect(reviews).toHaveLength(1)
+//     })
+//   });
+// });

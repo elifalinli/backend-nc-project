@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors')
 const {
   getCategories,
   getReviewById,
@@ -10,7 +11,8 @@ const {
   getUsers,
 } = require("./controllers/games.controllers.js");
 const { handlePSQL400s, handleCustomErrors, handle500statuses, handleForeignKeyErrors, handleNullKeyErrors } = require("./controllers/error-handling.controllers.js");
-const app = express(); 
+const app = express();
+app.use(cors()); 
 app.use(express.json())
 
 
