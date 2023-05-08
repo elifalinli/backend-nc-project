@@ -1,2 +1,2 @@
 - To connect to the databases correctly, please set up two different .env.<name> files, one for the test database and other for the test database. Set up the PGDATABASE commands with the appropriate database names inside. Check and make sure they are included in the gitignore file to ensure the safety.
-- The coonection.js should point to the right path of the database, otherwise the error message that set will be seen.
+- The connection.js should point to the right path of the database, otherwise the error message that set will be seen.
